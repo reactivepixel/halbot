@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start" : "node server.js"
+    "start": "node server.js"
   },
   "author": "Chapman",
   "license": "ISC",
@@ -17,5 +17,9 @@
     "sequelize": "^3.14.2",
     "slack-client": "^1.5.0",
     "tunnel-ssh": "^2.0.1"
+  },
+  "devDependencies": {
+    "flightplan": "^0.6.7",
+    "fly": "^0.8.4"
   }
 }

@@ -3,7 +3,9 @@ var msg = require('./models/msg.js');
 var cmd = require('./lib/parse-cmd.js');
 var clever = require('./lib/clever.js');
 
-require('dotenv').load();
+if(!process.env.NODE_ENV){
+  require('dotenv').load();
+}
 
 // Configs
 var autoMark = true;
