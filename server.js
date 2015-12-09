@@ -42,7 +42,6 @@ slack.on('message', function(message) {
     console.log('err' + err);
   });
 
-
 // Event: Error
 slack.on('error', function(err) {
   return console.error("Error", err);
