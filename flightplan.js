@@ -21,12 +21,6 @@ plan.target('production', [
     username: username,
     agent: process.env.SSH_AUTH_SOCK
   },
-//add in another server if you have more than one
-// {
-//   host: '104.131.93.216',
-//   username: username,
-//   agent: process.env.SSH_AUTH_SOCK
-// }
 ]);
 
 // run commands on localhost
@@ -51,7 +45,7 @@ plan.remote(function(remote) {
   remote.sudo('npm --production --prefix ~/' + tmpDir + ' install ~/' + tmpDir, {user: username});
 
   remote.log('Reload application');
-  remote.sudo('ln -snf ~/' + tmpDir + ' ~/'+appName, {user: username});
-  remote.exec('pm2 stop ~/'+appName+'/'+startFile, {failsafe: true});
-  remote.exec('pm2 start ~/'+appName+'/'+startFile);
+  remote.sudo('ln -snf ~/' + tmpDir + ' ~/'+ appName, {user: username});
+  remote.exec('pm2 stop ~/'+ appName +'/'+ startFile, {failsafe: true});
+  remote.exec('pm2 start ecosystem.json');
 });

@@ -3,9 +3,7 @@ var msg = require('./models/msg.js');
 var cmd = require('./lib/parse-cmd.js');
 var clever = require('./lib/clever.js');
 
-if(!process.env.NODE_ENV){
-  require('dotenv').load();
-}
+if(!process.env.NODE_ENV && process.env.NODE_ENV != 'production') require('dotenv').load();
 
 // Configs
 var autoMark = true;
@@ -23,14 +21,22 @@ slack.on('open', function() {
 // Event: Message recieved in any room or DM the bot is present
 slack.on('message', function(message) {
 
-
   if(!message.text) return false;
 
   var meta = cmd.parse(message.text);
 
   if(meta){
     if(meta.type === "@" && meta.target_id === slack.self.id){
-      if(meta.commands[1] === 'recall') cmd.recall(meta, message, msg, slack);
+      var targetChannel = slack.getChannelGroupOrDMByID(message.channel);
+      switch (meta.commands[1]) {
+        case 'recall':
+          cmd.recall(meta, message, msg, slack);
+          targetChannel.send('<@' + message.user + '>: Recalling previous messages for you, check your DMs.');
+          break;
+        default:
+          // cmd.recall(meta, message, msg, slack);
+          clever.ask(targetChannel, message.text);
+      }
     }
   }
 
