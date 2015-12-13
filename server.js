@@ -21,6 +21,7 @@ slack.on('open', function() {
 // Event: Message recieved in any room or DM the bot is present
 slack.on('message', function(message) {
 
+  // TODO refine edgecases for non new msg events like edits
   if(!message.text) return false;
 
   var meta = cmd.parse(message.text);
@@ -34,7 +35,6 @@ slack.on('message', function(message) {
           targetChannel.send('<@' + message.user + '>: Recalling previous messages for you, check your DMs.');
           break;
         default:
-          // cmd.recall(meta, message, msg, slack);
           clever.ask(targetChannel, message.text);
       }
     }
